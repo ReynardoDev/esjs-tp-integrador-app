@@ -1,22 +1,43 @@
-importar { Terminal } desde '@es-js/terminal'
+/**
+  EsJS: Lenguaje de programación con sintaxis en español basado en JavaScript.
+*/
 
-asincrono funcion inicio() {
-	Terminal.limpiar()
+importar { Terminal } desde "@es-js/terminal"
+importar { validarSecreto } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/validar-secreto.js"
+importar { obtenerJson } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/obtener-json.js"
 
-	Terminal.escribir('Ingresa un valor:')
 
-	const resultado = esperar Terminal.leer()
+const dni = '25377568'
+//const palabraSecreta = 'yunes-568'
 
-	Terminal.escribir({
-		Resultado: resultado,
-		Tipo: tipoDe resultado,
-	})
+Terminal.escribir('Ingrese palabra secreta: ')
+var secreto = esperar Terminal.leer()
 
-	Terminal.escribir('Presiona ENTER para volver a iniciar')
+var res = esperar validarSecreto(dni, secreto)
+consola.escribir('Cargando datos...')
 
-	esperar Terminal.leerEnter()
+si (res) {
+  consola.escribir('La palabra secreta es valida, puede continuar')
+  esperar mostrarCotizacion()  
 
-	esperar inicio()
+} sino {
+  consola.escribir('La palabra secreta es no es valida, no puede continuar')
 }
 
-inicio()
+
+asincrono funcion mostrarCotizacion(){
+  mut info = crear Fecha();
+  consola.escribir('Cotización del dolar blue hoy: '+info.obtenerDia()+'/'+info.obtenerMes()+'/'+ info.obtenerAño())
+  mut dolarblue = esperar obtenerJson('https://dolarapi.com/v1/dolares/blue')
+  //console.log(dolarblue)  
+  consola.escribir('Compra: $' + dolarblue.compra + ' ' + dolarblue.moneda )
+  consola.escribir('Venta: $' + dolarblue.venta + ' ' + dolarblue.moneda )
+  var promedio = (dolarblue.compra + dolarblue.venta) / 2
+  consola.escribir('Promedio: $' + promedio + ' ' + dolarblue.moneda )
+}
+
+
+
+
+
+
